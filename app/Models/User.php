@@ -22,7 +22,18 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'type',
     ];
+
+    public function kelas()
+    {
+        return $this->hasOne(Kelas::class, 'guru_id');
+    }
+
+    public function murid()
+    {
+        return $this->hasMany(Murid::class, 'orangtua_id');
+    }
 
     /**
      * The attributes that should be hidden for serialization.

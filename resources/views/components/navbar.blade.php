@@ -18,7 +18,16 @@
                         <a class="nav-link" aria-disabled="true">Santri</a>
                     </li>
                 </ul>
-                <a href="{{ route('login') }}" class="btn btn-success fw-bold">Login</a>
+                @auth
+                    <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                        @csrf
+                        <button type="submit" class="btn btn-danger">
+                            Logout
+                        </button>
+                    </form>
+                @else
+                    <a href="{{ route('login') }}" class="btn btn-success fw-bold">Login</a>
+                @endauth
                 {{-- <form class="d-flex" role="search">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
                 <button class="btn btn-outline-success" type="submit">Search</button>

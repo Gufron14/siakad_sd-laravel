@@ -22,9 +22,9 @@
         </a>
     </div>
 
-    {{-- <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect vertical-menu-btn">
+    <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect vertical-menu-btn">
         <i class="fa fa-fw fa-bars"></i>
-    </button> --}}
+    </button>
 
     <div data-simplebar class="sidebar-menu-scroll">
 
