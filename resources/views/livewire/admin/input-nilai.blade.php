@@ -51,7 +51,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Tantan Sutandi</td>
+                            <td>Tantan</td>
                             <td>
                                 <input type="number" class="form-control form-control-sm">
                             </td>
