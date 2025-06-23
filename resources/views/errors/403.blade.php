@@ -18,7 +18,7 @@
             <p class="lead">
                 Hanya Admin yang Boleh Masuk.
             </p>
-            <a href="/" class="btn btn-primary">Kembali</a>
+            {{-- <a href="/" class="btn btn-primary">Kembali</a> --}}
         </div>
     </div>
 </body>
