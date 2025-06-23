@@ -16,7 +16,7 @@
             <h1 class="display-1 fw-bold">403</h1>
             <p class="fs-3"> <span class="text-danger">Opps!</span> Dilarang!</p>
             <p class="lead">
-                Hanya Admin yang Boleh Masuk.
+                Kamu bukan Pengguna yang dapat mengakses Halaman ini.
             </p>
             {{-- <a href="/" class="btn btn-primary">Kembali</a> --}}
         </div>
