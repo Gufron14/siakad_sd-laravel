@@ -6,11 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 class MataPelajaran extends Model
 {
     protected $table = 'mata_pelajaran';
-    protected $fillable = ['nama'];
+    protected $fillable = ['nama', 'kelas_id'];
 
     public function nilai()
     {
         return $this->hasMany(Nilai::class, 'mata_pelajaran_id');
+    }
+
+    public function kelas()
+    {
+        return $this->belongsTo(Kelas::class);
     }
 
     /**

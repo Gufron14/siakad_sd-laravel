@@ -2,13 +2,14 @@
 
 namespace App\Livewire\Admin;
 
-use Livewire\Component;
-use Livewire\Attributes\Title;
-use Livewire\Attributes\Layout;
+use App\Models\User;
 use App\Models\Kelas;
-use App\Models\MataPelajaran;
 use App\Models\Murid;
 use App\Models\Nilai;
+use Livewire\Component;
+use App\Models\MataPelajaran;
+use Livewire\Attributes\Title;
+use Livewire\Attributes\Layout;
 use Illuminate\Support\Facades\Auth;
 
 #[Title('Input Nilai')]
@@ -39,7 +40,7 @@ class InputNilai extends Component
         // Tahun ajaran (otomatis 3 tahun terakhir)
         $tahunSekarang = date('Y');
         for ($i = 0; $i < 3; $i++) {
-            $this->listTahun[] = ($tahunSekarang - $i) . '/' . ($tahunSekarang - $i + 1);
+            $this->listTahun[] = $tahunSekarang - $i . '/' . ($tahunSekarang - $i + 1);
         }
 
         // Default tahun ajaran
@@ -111,7 +112,7 @@ class InputNilai extends Component
                 [
                     'guru_id' => Auth::id(),
                     'uas' => $this->nilai[$murid->id]['uas'] ?: null,
-                ]
+                ],
             );
         }
 
@@ -136,7 +137,16 @@ class InputNilai extends Component
 
     public function render()
     {
-        $guru = Auth::user();
+        $loggedInUser = Auth::user();
+
+        // Default guru
+        $guru = $loggedInUser;
+
+        // Jika yang login adalah admin, cari user dengan role guru
+        if ($loggedInUser->hasRole('admin')) {
+            $guru = User::role('guru')->first(); // ambil salah satu guru
+        }
+
         return view('livewire.admin.input-nilai', [
             'kelas' => $this->kelas,
             'guru' => $guru,

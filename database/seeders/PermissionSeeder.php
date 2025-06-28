@@ -11,47 +11,72 @@ class PermissionSeeder extends Seeder
     public function run(): void
     {
         $permissions = [
-            // Admin
-            'crud guru',
-            'crud kelas',
-            'crud murid',
-            'crud ppdb',
+
+            // Staff SPMB
+            'create.ppdb',
+            'edit.ppdb',
+            'delete.ppdb',
+            'lihat.ppdb',
 
             // Guru
-            'input nilai',
-            'input absensi',
-            'lihat raport',
-            'lihat jadwal',
-            'lihat mapel',
+            'input.nilai',
+            'input.absensi',
+            'lihat.raport',
+            'cetak.raport',
 
-            // Orang Tua
-            'lihat nilai anak',
+            
+            // Admin
+            'create.jadwal',
+            'edit.jadwal',
+            'delete.jadwal',
+            'lihat.jadwal',
+
+            'create.mapel',
+            'edit.mapel',
+            'delete.mapel',
+            'lihat.mapel',
+
+            'create.guru',
+            'edit.guru',
+            'delete.guru',
+            'lihat.guru',
+
+            'create.siswa',
+            'edit.siswa',
+            'delete.siswa',
+            'lihat.siswa',
+
+
         ];
 
         foreach ($permissions as $permission) {
             Permission::firstOrCreate(['name' => $permission]);
         }
 
-                // Assign permissions to roles
+        // Assign permissions to roles
         $admin = Role::where('name', 'admin')->first();
         $guru = Role::where('name', 'guru')->first();
-        $orangtua = Role::where('name', 'orangtua')->first();
+        $staff = Role::where('name', 'staff')->first();
 
         // Admin: semua permission
         $admin->syncPermissions($permissions);
 
-        // Guru: hanya permission guru
-        $guru->syncPermissions([
-            'input nilai',
-            'input absensi',
-            'lihat raport',
-            'lihat jadwal',
-            'lihat mapel',
+        // Staff: permission staff + lihat jadwal
+        $staff->syncPermissions([
+            'create.ppdb',
+            'edit.ppdb',
+            'delete.ppdb',
+            'lihat.ppdb',
+            'lihat.jadwal',
         ]);
 
-        // Orang Tua: hanya permission orang tua
-        $orangtua->syncPermissions([
-            'lihat nilai anak',
+        // Guru: permission guru + lihat jadwal
+        $guru->syncPermissions([
+            'input.nilai',
+            'input.absensi',
+            'lihat.raport',
+            'cetak.raport',
+            'lihat.jadwal',
         ]);
     }
 }

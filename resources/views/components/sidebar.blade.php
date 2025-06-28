@@ -49,6 +49,13 @@
                 </li>
 
                 <li>
+                    <a href="{{ route('raport') }}" class="waves-effect">
+                        <i class="uil-file-check"></i>
+                        <span>Raport</span>
+                    </a>
+                </li>
+
+                <li>
                     <a href="{{ route('absensi') }}" class="waves-effect">
                         <i class="uil-list-ul"></i>
                         <span>Absensi Santri</span>
@@ -63,15 +70,10 @@
                 <li>
                     <a href="{{ route('mataPelajaran') }}" class="waves-effect">
                         <i class="uil-books"></i>
-                        <span>Mata Pelajaran</span>
+                        <span>Kelas</span>
                     </a>
                 </li>
-                <li>
-                    <a href="{{ route('raport') }}" class="waves-effect">
-                        <i class="uil-file-check"></i>
-                        <span>Raport</span>
-                    </a>
-                </li>
+
                 <li>
                     <a href="{{ route('ppdb') }}" class="waves-effect">
                         <i class="uil-users-alt"></i> <span class="badge rounded-pill bg-primary float-end">01</span>

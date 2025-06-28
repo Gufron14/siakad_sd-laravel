@@ -23,21 +23,27 @@ use App\Livewire\Admin\JadwalPelajaran;
 |
 */
 
-Route::prefix('admin')
-    ->middleware('admin')
-    ->group(function () {
-        Route::get('dashboard', Dashboard::class)->name('dashboard');
+// Admin Routes - Accessible by Admin, Staff, Guru with permissions
+Route::middleware(['role:admin|staff|guru'])->group(function () {
+
+    Route::get('admin/dashboard', Dashboard::class)->name('dashboard');
+    Route::get('dashboard/jadwal-pelajaran', JadwalPelajaran::class)->name('jadwalPelajaran');
+
+    Route::prefix('dashboard/staff')->group(function () {
         Route::get('ppdb', PPDB::class)->name('ppdb');
     });
 
-Route::middleware('guru')
-    ->prefix('guru')
-    ->group(function () {
-        Route::get('input-nilai', InputNilai::class)->name('inputNilai');
-        Route::get('absensi', Absensi::class)->name('absensi');
-        Route::get('jadwal-pelajaran', JadwalPelajaran::class)->name('jadwalPelajaran');
-        Route::get('mata-pelajaran', MataPelajaran::class)->name('mataPelajaran');
-        Route::get('raport', Raport::class)->name('raport');
+    // Guru Routes - Specific Permissions
+    Route::prefix('dashboard/guru')->group(function () {
+        Route::middleware('permission:input.nilai')->get('input-nilai', InputNilai::class)->name('inputNilai');
+
+        Route::middleware('permission:input.absensi')->get('absensi', Absensi::class)->name('absensi');
+
+
+        Route::middleware('permission:lihat.mapel')->get('mata-pelajaran', MataPelajaran::class)->name('mataPelajaran');
+
+        Route::middleware('permission:lihat.raport')->get('raport', Raport::class)->name('raport');
+    });
 });
 
 Route::get('/', Home::class)->name('/');

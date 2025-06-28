@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 class JadwalPelajaran extends Model
 {
     protected $table = 'jadwal_pelajaran';
-    protected $fillable = ['kelas_id', 'mata_pelajaran_id', 'guru_id', 'hari', 'jam'];
+    protected $fillable = ['kelas_id', 'mata_pelajaran_id', 'guru_id', 'hari', 'jam', 'waktu'];
 
     public function kelas()
     {

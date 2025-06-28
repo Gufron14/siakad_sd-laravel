@@ -3,56 +3,53 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\JadwalPelajaran;
-use App\Models\MataPelajaran;
 use App\Models\Kelas;
-use App\Models\User;
+use App\Models\MataPelajaran;
+use App\Models\JadwalPelajaran;
 
 class JadwalPelajaranSeeder extends Seeder
 {
     public function run(): void
     {
-        // Jadwal untuk kelas 1 & 2
-        $jadwal12 = [
-            'Senin'   => ["Al-Qur'an", "Iqro"],
-            'Selasa'  => ["Ahlak", "Iqro"],
-            'Rabu'    => ["Fiqih", "Iqro"],
-            'Kamis'   => ["B. Arab", "Iqro"],
-            'Jum\'at' => ["Praktek", "Hapalan Juz Ama"],
-            'Sabtu'   => ["Do'a - Do'a", "Iqro"],
+        $jadwal = [
+            '1' => [ 'jam' => '13:00-14:00', 'Senin' => ['Alquran', 'Iqro'], 'Selasa' => ['Akhlaq', 'Iqro'], 'Rabu' => ['Fiqih', 'Iqro'], 'Kamis' => ['B.Arab', 'Iqro'], 'Jum\'at' => ['Praktek', 'Hafalan Juz Amma'], 'Sabtu' => ['Doa-Doa', 'Iqro'], ],
+            '2' => [ 'jam' => '13:00-14:00', 'Senin' => ['Alquran', 'Iqro'], 'Selasa' => ['Akhlaq', 'Iqro'], 'Rabu' => ['Fiqih', 'Iqro'], 'Kamis' => ['B.Arab', 'Iqro'], 'Jum\'at' => ['Praktek', 'Hafalan Juz Amma'], 'Sabtu' => ['Doa-Doa', 'Iqro'], ],
+            '3' => [ 'jam' => '14:00-15:00', 'Senin' => ['Al Quran', 'Hadist'], 'Selasa' => ['Akidah', 'Akhlaq', 'Alquran'], 'Rabu' => ['Fiqih', 'Doa-Doa'], 'Kamis' => ['SKI', 'B.Arab', 'Al Quran'], 'Jum\'at' => ['Praktek', 'Hafalan Juz Amma'], 'Sabtu' => ['Tajwid', 'Hafalan Juz Amma'], ],
+            '4' => [ 'jam' => '14:00-15:00', 'Senin' => ['Al Quran', 'Hadist'], 'Selasa' => ['Akidah', 'Akhlaq', 'Alquran'], 'Rabu' => ['Fiqih', 'Doa-Doa'], 'Kamis' => ['SKI', 'B.Arab', 'Al Quran'], 'Jum\'at' => ['Praktek', 'Hafalan Juz Amma'], 'Sabtu' => ['Tajwid', 'Hafalan Juz Amma'], ],
+            '5' => [ 'jam' => '15:30-16:30', 'Senin' => ['Al Quran', 'Hadist'], 'Selasa' => ['Akidah', 'Akhlaq', 'Alquran'], 'Rabu' => ['Fiqih', 'Tarikh Islam'], 'Kamis' => ['SKI', 'B.Arab', 'Al Quran'], 'Jum\'at' => ['Praktek', 'Hafalan Juz Amma'], 'Sabtu' => ['Tajwid', 'Hafalan Juz Amma'], ],
+            '6' => [ 'jam' => '15:30-16:30', 'Senin' => ['Al Quran', 'Hadist'], 'Selasa' => ['Akidah', 'Akhlaq', 'Alquran'], 'Rabu' => ['Fiqih', 'Tarikh Islam'], 'Kamis' => ['SKI', 'B.Arab', 'Al Quran'], 'Jum\'at' => ['Praktek', 'Hafalan Juz Amma'], 'Sabtu' => ['Tajwid', 'Hafalan Juz Amma'], ],
         ];
 
-        // Jadwal untuk kelas 3 & 4
-        $jadwal34 = [
-            'Senin'   => ["Al-Qur'an M. 1/3", "Hadis M. 2/4", "Baca Al-Qur'an"],
-            'Selasa'  => ["Aqidah 1.3", "Ahlak 2.4", "Baca Al-Qur'an"],
-            'Rabu'    => ["Fiqih", "Do'a - Do'a"],
-            'Kamis'   => ["SKI M. 1.3", "B. Arab M. 2.4", "Baca Al-Qur'an"],
-            'Jum\'at' => ["Praktek", "Hapalan Juz Ama"],
-            'Sabtu'   => ["Tajwid", "Juz Ama Hapalan"],
-        ];
+        $kelasList = Kelas::all();
 
-        // Ambil kelas dan guru
-        $kelas = Kelas::all();
-        foreach ($kelas as $kls) {
-            $isKelas12 = in_array($kls->nama, ['1', '2']);
-            $jadwal = $isKelas12 ? $jadwal12 : $jadwal34;
+        foreach ($kelasList as $kls) {
+            $namaKelas = $kls->nama;
+            if (!isset($jadwal[$namaKelas])) continue;
+
+            $jadwalKelas = $jadwal[$namaKelas];
+            $jam = $jadwalKelas['jam'];
             $guruId = $kls->guru_id;
+            $dataJadwal = [];
 
-            foreach ($jadwal as $hari => $mapels) {
-                foreach ($mapels as $mapel) {
-                    $mapelId = MataPelajaran::where('nama', $mapel)->first()->id ?? null;
-                    if ($mapelId) {
-                        JadwalPelajaran::create([
-                            'kelas_id' => $kls->id,
-                            'mata_pelajaran_id' => $mapelId,
-                            'guru_id' => $guruId,
-                            'hari' => $hari,
-                            'jam' => '07:00-08:00', // contoh jam
-                        ]);
-                    }
+            foreach ($jadwalKelas as $hari => $mapels) {
+                if ($hari === 'jam') continue;
+
+                foreach ($mapels as $mapelNama) {
+                    $mapel = MataPelajaran::where('nama', $mapelNama)->first();
+                    if (!$mapel) continue;
+
+                    $dataJadwal[$hari][] = [
+                        'jam' => $jam,
+                        'mata_pelajaran_id' => $mapel->id,
+                    ];
                 }
             }
+
+            JadwalPelajaran::create([
+                'kelas_id' => $kls->id,
+                'guru_id' => $guruId,
+                'jadwal' => json_encode($dataJadwal),
+            ]);
         }
     }
 }
