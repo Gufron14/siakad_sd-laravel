@@ -34,8 +34,8 @@ class InputNilai extends Component
         // Ambil kelas yang diampu guru
         $this->kelas = Kelas::where('guru_id', $guru->id)->first();
 
-        // Ambil daftar mata pelajaran
-        $this->listMataPelajaran = MataPelajaran::all();
+        // Ambil daftar mata pelajaran sesuai dengan kelas
+        $this->listMataPelajaran = MataPelajaran::where('kelas_id', $this->kelas->id)->get();
 
         // Tahun ajaran (otomatis 3 tahun terakhir)
         $tahunSekarang = date('Y');
@@ -78,16 +78,23 @@ class InputNilai extends Component
             return;
         }
 
+        // Cari data nilai berdasarkan mata pelajaran, semester, dan tahun
+        $nilaiRecord = Nilai::where([
+            'mata_pelajaran_id' => $this->mataPelajaranId,
+            'semester' => $this->semester,
+            'tahun' => $this->tahun,
+        ])->first();
+
+        // Load nilai untuk setiap murid
         foreach ($this->murids as $murid) {
-            $nilai = Nilai::where([
-                'murid_id' => $murid->id,
-                'mata_pelajaran_id' => $this->mataPelajaranId,
-                'semester' => $this->semester,
-                'tahun' => $this->tahun,
-            ])->first();
+            $nilaiUas = '';
+            
+            if ($nilaiRecord && $nilaiRecord->murid_nilai) {
+                $nilaiUas = $nilaiRecord->murid_nilai[$murid->id] ?? '';
+            }
 
             $this->nilai[$murid->id] = [
-                'uas' => $nilai->uas ?? '',
+                'uas' => $nilaiUas,
             ];
         }
     }
@@ -101,20 +108,26 @@ class InputNilai extends Component
             'nilai.*.uas' => 'nullable|numeric|min:0|max:100',
         ]);
 
+        // Siapkan data murid_nilai dalam format JSON
+        $muridNilaiData = [];
         foreach ($this->murids as $murid) {
-            Nilai::updateOrCreate(
-                [
-                    'murid_id' => $murid->id,
-                    'mata_pelajaran_id' => $this->mataPelajaranId,
-                    'semester' => $this->semester,
-                    'tahun' => $this->tahun,
-                ],
-                [
-                    'guru_id' => Auth::id(),
-                    'uas' => $this->nilai[$murid->id]['uas'] ?: null,
-                ],
-            );
+            if (!empty($this->nilai[$murid->id]['uas'])) {
+                $muridNilaiData[$murid->id] = (float) $this->nilai[$murid->id]['uas'];
+            }
         }
+
+        // Simpan atau update data nilai
+        Nilai::updateOrCreate(
+            [
+                'mata_pelajaran_id' => $this->mataPelajaranId,
+                'semester' => $this->semester,
+                'tahun' => $this->tahun,
+            ],
+            [
+                'guru_id' => Auth::id(),
+                'murid_nilai' => $muridNilaiData, // JSON format: {murid_id: nilai_uas}
+            ]
+        );
 
         session()->flash('success', 'Nilai berhasil disimpan!');
     }
@@ -125,14 +138,17 @@ class InputNilai extends Component
     public function getRataRataKelas()
     {
         $totalNilai = 0;
-        $jumlahMurid = count($this->murids);
+        $jumlahMuridDenganNilai = 0;
 
         foreach ($this->murids as $murid) {
             $nilaiUas = $this->nilai[$murid->id]['uas'] ?? 0;
-            $totalNilai += is_numeric($nilaiUas) ? $nilaiUas : 0;
+            if (is_numeric($nilaiUas) && $nilaiUas > 0) {
+                $totalNilai += $nilaiUas;
+                $jumlahMuridDenganNilai++;
+            }
         }
 
-        return $jumlahMurid > 0 ? number_format($totalNilai / $jumlahMurid, 2) : '-';
+        return $jumlahMuridDenganNilai > 0 ? number_format($totalNilai / $jumlahMuridDenganNilai, 2) : '-';
     }
 
     public function render()

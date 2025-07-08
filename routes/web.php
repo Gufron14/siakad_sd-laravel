@@ -1,9 +1,9 @@
 <?php
 
+use App\Livewire\Admin\DaftarHadir;
 use App\Livewire\Admin\PPDB\Detail;
 use App\Livewire\Home;
 use App\Livewire\Dashboard;
-use App\Livewire\Admin\PPDB;
 use App\Livewire\Auth\Login;
 use App\Livewire\Admin\Raport;
 use App\Livewire\Admin\Absensi;
@@ -45,13 +45,15 @@ Route::middleware(['role:admin|staff|guru'])->group(function () {
         Route::middleware('permission:input.nilai')->get('input-nilai', InputNilai::class)->name('inputNilai');
 
         Route::middleware('permission:input.absensi')->get('absensi', Absensi::class)->name('absensi');
-
+        Route::get('daftar-hadir', DaftarHadir::class)->name('daftarHadir');
 
         Route::middleware('permission:lihat.mapel')->get('mata-pelajaran', MataPelajaran::class)->name('mataPelajaran');
 
         Route::middleware('permission:lihat.raport')->get('raport', Raport::class)->name('raport');
+        // Route::middleware('permission:lihat.raport')->get('cetak-raport/{kelas_id}/{semester}/{tahun}', CetakRaport::class)->name('cetakRaport');
     });
 });
+
 
 Route::get('/', Home::class)->name('/');
 Route::get('ppdb', \App\Livewire\PPDB::class)->name('pendaftaran.pdb');

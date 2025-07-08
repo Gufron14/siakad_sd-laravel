@@ -16,6 +16,7 @@
             <h2 class="card-title mb-0">
                 Absensi Santri
             </h2>
+            <a href="{{ route('daftarHadir') }}" class="btn btn-primary">Lihat Daftar Hadir</a>
         </div>
         <div class="card-body">
             @if (Auth::user()->hasRole('admin'))

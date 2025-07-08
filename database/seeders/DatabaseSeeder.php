@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             UserSeeder::class,
             GuruSeeder::class,
-            OrangTuaSeeder::class,
+            // OrangTuaSeeder::class,
             KelasSeeder::class,
             MataPelajaranSeeder::class,
             JadwalPelajaranSeeder::class,
