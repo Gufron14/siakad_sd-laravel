@@ -73,8 +73,14 @@
                     </div>
                 </div>
             </div>
-            <button class="btn btn-danger fw-bold">Tolak Peserta</button>
-            <button class="btn btn-primary fw-bold">Terima Peserta</button>
+            @if ($ppdb->status == 'pending')                
+                <button type="submit" class="btn btn-danger fw-bold" wire:click="tolakPeserta">Tolak Peserta</button>
+                <button type="submit" class="btn btn-primary fw-bold" wire:click="terimaPeserta">Terima Peserta</button>
+            @endif
+            @if ($ppdb->status == 'ditolak')                
+                <button type="submit" class="btn btn-primary fw-bold" wire:click="terimaPeserta">Terima Peserta</button>
+            @endif
+
         </div>
     </div>
 </div>

@@ -23,6 +23,9 @@ class User extends Authenticatable
         'email',
         'password',
         'type',
+        'nip',
+        'phone',
+        'address'
     ];
 
     public function kelas()
@@ -33,6 +36,18 @@ class User extends Authenticatable
     public function murid()
     {
         return $this->hasMany(Murid::class, 'orangtua_id');
+    }
+
+    // Scope untuk mendapatkan user dengan role guru
+    public function scopeGuru($query)
+    {
+        return $query->role('guru');
+    }
+
+    // Scope untuk mendapatkan guru yang belum memiliki kelas
+    public function scopeGuruTanpaKelas($query)
+    {
+        return $query->role('guru')->doesntHave('kelas');
     }
 
     /**

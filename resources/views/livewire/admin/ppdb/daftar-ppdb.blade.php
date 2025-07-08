@@ -37,7 +37,7 @@
                             <td>{{ $item->nama_lengkap }}</td>
                             <td class="text-center">{{ $item->created_at->format('d-m-Y') }}</td>
                             <td class="text-center">
-                                <span class="badge bg-{{ $item->status == 'Diterima' ? 'success' : 'danger' }}">
+                                <span class="badge bg-{{ $item->status == 'diterima' ? 'success' : 'danger' }}">
                                     {{ $item->status }}
                                 </span>
                             </td>

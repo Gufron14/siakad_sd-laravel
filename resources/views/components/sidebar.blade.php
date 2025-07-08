@@ -50,9 +50,9 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('mataPelajaran') }}" class="waves-effect">
+                        <a href="{{ route('pembagianKelas') }}" class="waves-effect">
                             <i class="uil-books"></i>
-                            <span>Kelas</span>
+                            <span>Pembagian Kelas</span>
                         </a>
                     </li>
                 @endif
@@ -94,8 +94,13 @@
 
                     <li>
                         <a href="{{ route('ppdb') }}" class="waves-effect">
-                            <i class="uil-users-alt"></i> <span
-                                class="badge rounded-pill bg-primary float-end">01</span>
+                            @php
+                                $count = \App\Models\PPDB::where('status', 'pending')->count();
+                            @endphp
+                            <i class="uil-users-alt"></i>
+                            @if ($count > 0)                                
+                                <span  class="badge rounded-pill bg-primary float-end">{{ $count }}</span>
+                            @endif
                             <span>PPDB</span>
                         </a>
                     </li>

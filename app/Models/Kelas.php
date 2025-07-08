@@ -17,4 +17,16 @@ class Kelas extends Model
     {
         return $this->hasMany(Murid::class, 'kelas_id');
     }
+
+    // Scope untuk mendapatkan kelas berdasarkan tingkat
+    public function scopeByTingkat($query, $tingkat)
+    {
+        return $query->where('nama', $tingkat);
+    }
+
+    // Method untuk mendapatkan nama kelas yang sudah ada
+    public static function getExistingKelas()
+    {
+        return self::pluck('nama')->toArray();
+    }
 }

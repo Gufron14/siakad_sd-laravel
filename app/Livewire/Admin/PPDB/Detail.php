@@ -18,6 +18,24 @@ class Detail extends Component
     {
         $this->ppdb = PPDB::findOrFail($id);
     }
+
+    public function terimaPeserta()
+    {
+        $this->ppdb->update([
+            'status' => 'diterima'
+        ]);
+
+        return redirect()->route('ppdb')->with('success', 'Peserta Didik Berhasil Diterima');
+    }
+
+    public function tolakPeserta()
+    {
+        $this->ppdb->update([
+            'status' => 'ditolak'
+        ]);
+
+        return redirect()->route('ppdb')->with('success', 'Peserta Didik Berhasil Ditolak');
+    }
     
     public function render()
     {

@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Livewire\Admin\MataPelajaran;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Admin\JadwalPelajaran;
+use App\Livewire\Admin\PembagianKelas;
 use App\Livewire\Admin\PPDB\DaftarPPDB;
 
 /*
@@ -33,6 +34,8 @@ Route::middleware(['role:admin|staff|guru'])->group(function () {
 
     Route::get('admin/dashboard', Dashboard::class)->name('dashboard');
     Route::get('dashboard/jadwal-pelajaran', JadwalPelajaran::class)->name('jadwalPelajaran');
+
+    Route::get('pembagian-kelas', PembagianKelas::class)->name('pembagianKelas');
 
     Route::prefix('dashboard/staff')->group(function () {
         Route::get('ppdb', DaftarPPDB::class)->name('ppdb');
