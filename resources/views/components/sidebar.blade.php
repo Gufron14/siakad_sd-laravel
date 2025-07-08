@@ -32,8 +32,6 @@
         <div id="sidebar-menu">
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
-                <li class="menu-title">@lang('translation.Menu')</li>
-
                 <li>
                     <a href="{{ route('dashboard') }}" class="waves-effect">
                         <i class="uil-home-alt"></i>
@@ -41,45 +39,67 @@
                     </a>
                 </li>
 
-                <li>
-                    <a href="{{ route(name: 'inputNilai') }}" class="waves-effect">
-                        <i class="uil-comment-alt-edit"></i>
-                        <span>Input Nilai</span>
-                    </a>
-                </li>
 
-                <li>
-                    <a href="{{ route('raport') }}" class="waves-effect">
-                        <i class="uil-file-check"></i>
-                        <span>Raport</span>
-                    </a>
-                </li>
+                @if (Auth::user()->hasRole('admin'))
+                    <li class="menu-title">ADMIN</li>
 
-                <li>
-                    <a href="{{ route('absensi') }}" class="waves-effect">
-                        <i class="uil-list-ul"></i>
-                        <span>Absensi Santri</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('jadwalPelajaran') }}" class="waves-effect">
-                        <i class="uil-table"></i>
-                        <span>Jadwal Pelajaran</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('mataPelajaran') }}" class="waves-effect">
-                        <i class="uil-books"></i>
-                        <span>Kelas</span>
-                    </a>
-                </li>
+                    <li>
+                        <a href="{{ route('jadwalPelajaran') }}" class="waves-effect">
+                            <i class="uil-table"></i>
+                            <span>Jadwal Pelajaran</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('mataPelajaran') }}" class="waves-effect">
+                            <i class="uil-books"></i>
+                            <span>Kelas</span>
+                        </a>
+                    </li>
+                @endif
 
-                <li>
-                    <a href="{{ route('ppdb') }}" class="waves-effect">
-                        <i class="uil-users-alt"></i> <span class="badge rounded-pill bg-primary float-end">01</span>
-                        <span>PPDB</span>
-                    </a>
-                </li>
+
+                @if (Auth::user()->hasRole('guru'))
+                    <li class="menu-title text-uppercase">wali kelas</li>
+                    <li>
+                        <a href="{{ route(name: 'inputNilai') }}" class="waves-effect">
+                            <i class="uil-comment-alt-edit"></i>
+                            <span>Input Nilai</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('raport') }}" class="waves-effect">
+                            <i class="uil-file-check"></i>
+                            <span>Raport</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('absensi') }}" class="waves-effect">
+                            <i class="uil-list-ul"></i>
+                            <span>Absensi Santri</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('jadwalPelajaran') }}" class="waves-effect">
+                            <i class="uil-table"></i>
+                            <span>Jadwal Pelajaran</span>
+                        </a>
+                    </li>
+                @endif
+
+                @if (Auth::user()->hasRole('admin') || Auth::user()->hasRole('staff'))
+                    <li class="menu-title">STAFF SPMB</li>
+
+                    <li>
+                        <a href="{{ route('ppdb') }}" class="waves-effect">
+                            <i class="uil-users-alt"></i> <span
+                                class="badge rounded-pill bg-primary float-end">01</span>
+                            <span>PPDB</span>
+                        </a>
+                    </li>
+                @endif
             </ul>
         </div>
         <!-- Sidebar -->

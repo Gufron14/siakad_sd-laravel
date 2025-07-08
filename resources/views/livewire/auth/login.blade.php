@@ -9,12 +9,10 @@
         </div>
         <div class="row align-items-center justify-content-center">
             <div class="col-md-8 col-lg-6 col-xl-5">
-                <div class="card">
-
+                <div class="card shadow-sm border-0">
                     <div class="card-body p-4">
                         <div class="text-center mt-2">
                             <h5 class="text-primary">Welcome Back !</h5>
-                            <p class="text-muted">Sign in to continue to Minible.</p>
                         </div>
                         <div class="p-2 mt-4">
                             <form wire:submit.prevent="login">

@@ -63,8 +63,6 @@
                     </div>
                 @endif
 
-
-
                 @if (Auth::user()->hasRole('admin'))
                     <div class="alert alert-danger text-center">
                         <i class="fas fa-exclamation-circle"></i>

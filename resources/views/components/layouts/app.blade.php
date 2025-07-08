@@ -14,7 +14,7 @@
 
 <body>
 
-    @if (!Request::is('home') && !Request::is('login'))
+    @if (Request::is('/'))
         <div class="container-fluid bg-success">
             <div class="container p-3 text-white">
                 <h4>Selamat Datang di Sistem Informasi Akadamik</h4>
