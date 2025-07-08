@@ -28,16 +28,16 @@
                 @else
                     <div class="alert alert-info">
                         <strong>Kelas:</strong> {{ $kelas->nama }} | 
-                        <strong>Jumlah Murid:</strong> {{ count($murids) }}
+                        <strong>Jumlah Santri:</strong> {{ count($murids) }}
                     </div>
 
                     {{-- Filter Section --}}
                     <div class="d-flex gap-3 mb-4">
                         <div class="col">
                             <div class="form-group">
-                                <label for="" class="form-label">Nama Murid</label>
+                                <label for="" class="form-label">Nama Santri</label>
                                 <select wire:model.live="selectedMurid" class="form-select">
-                                    <option value="">Pilih Murid</option>
+                                    <option value="">Pilih Santri</option>
                                     @foreach($murids as $murid)
                                         <option value="{{ $murid->id }}">{{ $murid->nama }}</option>
                                     @endforeach
@@ -107,7 +107,7 @@
                                                     -
                                                 @endif
                                             </td>
-                                            <td>{{ $this->getRataRataKelas() }}</td>
+                                            <td>{{ $this->getRataRataKelas($mapel->id) }}</td>
                                         </tr>
                                     @empty
                                         <tr>
@@ -126,7 +126,7 @@
                                                     ({{ ucwords($this->numberToWords($this->getPeringkat())) }})
                                                 @endif
                                             </span>  
-                                            &nbsp; dari {{ count($murids) }} Murid
+                                            &nbsp; dari {{ count($murids) }} Santri
                                         </td>
                                     </tr>
                                     <tr class="align-middle">
@@ -142,7 +142,7 @@
                                     </tr>
                                     <tr>
                                         <td>Tanpa Keterangan</td>
-                                        <td class="text-center">{{ $absensiData['alpha'] ?? 0 }}</td>
+                                        <td class="text-center">{{ $absensiData['alfa'] ?? 0 }}</td>
                                     </tr>
                                 </tbody>
                             </table>

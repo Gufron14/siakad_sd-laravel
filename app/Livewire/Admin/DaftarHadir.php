@@ -71,7 +71,7 @@ class DaftarHadir extends Component
                     'hadir' => 0,
                     'sakit' => 0,
                     'izin' => 0,
-                    'alpa' => 0
+                    'alfa' => 0
                 ];
 
                 foreach ($absensiRecords as $record) {

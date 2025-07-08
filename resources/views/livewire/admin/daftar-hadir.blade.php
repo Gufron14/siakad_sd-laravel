@@ -63,7 +63,7 @@
                                     {{ $absensiData[$murid->id]['izin'] ?? 0 }}
                                 </td>
                                 <td class="text-center">
-                                    {{ $absensiData[$murid->id]['alpa'] ?? 0 }}
+                                    {{ $absensiData[$murid->id]['alfa'] ?? 0 }}
                                 </td>
                             </tr>
                         @endforeach

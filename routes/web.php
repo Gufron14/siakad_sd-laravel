@@ -1,20 +1,21 @@
 <?php
 
-use App\Livewire\Admin\DaftarHadir;
-use App\Livewire\Admin\PPDB\Detail;
 use App\Livewire\Home;
 use App\Livewire\Dashboard;
 use App\Livewire\Auth\Login;
 use App\Livewire\Admin\Raport;
 use App\Livewire\Admin\Absensi;
+use App\Livewire\Admin\PPDB\Edit;
 use App\Livewire\Admin\InputNilai;
+use App\Livewire\Admin\CetakRaport;
+use App\Livewire\Admin\DaftarHadir;
+use App\Livewire\Admin\PPDB\Create;
+use App\Livewire\Admin\PPDB\Detail;
 use Illuminate\Support\Facades\Auth;
 use App\Livewire\Admin\MataPelajaran;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Admin\JadwalPelajaran;
-use App\Livewire\Admin\PPDB\Create;
 use App\Livewire\Admin\PPDB\DaftarPPDB;
-use App\Livewire\Admin\PPDB\Edit;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,7 +51,7 @@ Route::middleware(['role:admin|staff|guru'])->group(function () {
         Route::middleware('permission:lihat.mapel')->get('mata-pelajaran', MataPelajaran::class)->name('mataPelajaran');
 
         Route::middleware('permission:lihat.raport')->get('raport', Raport::class)->name('raport');
-        // Route::middleware('permission:lihat.raport')->get('cetak-raport/{kelas_id}/{semester}/{tahun}', CetakRaport::class)->name('cetakRaport');
+        Route::get('cetak-raport/{kelas_id}/{semester}/{tahun}', CetakRaport::class)->name('cetakRaport');
     });
 });
 

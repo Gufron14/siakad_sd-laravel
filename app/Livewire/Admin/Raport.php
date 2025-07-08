@@ -132,7 +132,7 @@ class Raport extends Component
             $this->absensiData = [
                 'sakit' => 0,
                 'izin' => 0,
-                'alpha' => 0
+                'alfa' => 0
             ];
 
             foreach ($absensiRecords as $record) {
@@ -143,8 +143,8 @@ class Raport extends Component
                         $this->absensiData['sakit']++;
                     } elseif ($status === 'izin') {
                         $this->absensiData['izin']++;
-                    } elseif ($status === 'alpha') {
-                        $this->absensiData['alpha']++;
+                    } elseif ($status === 'alfa') {
+                        $this->absensiData['alfa']++;
                     }
                 }
             }
@@ -189,30 +189,37 @@ class Raport extends Component
         return $posisi !== false ? $posisi + 1 : null;
     }
 
-    public function getRataRataKelas()
+    public function getRataRataKelas($mataPelajaranId = null)
     {
-        if (!$this->selectedSemester || !$this->selectedTahun) {
+        if (!$this->selectedSemester || !$this->selectedTahun || !$mataPelajaranId) {
             return 0;
         }
 
-        $nilaiRecords = Nilai::where('semester', $this->selectedSemester)
+        // Convert semester format from Ganjil/Genap to numeric
+        $semesterNumber = $this->selectedSemester === 'Ganjil' ? '1' : '2';
+
+        // Ambil nilai untuk mata pelajaran tertentu
+        $nilaiRecord = Nilai::where('mata_pelajaran_id', $mataPelajaranId)
+            ->where('semester', $semesterNumber)
             ->where('tahun', $this->selectedTahun)
-            ->get();
+            ->first();
 
-        $totalNilaiSemua = 0;
-        $totalMuridSemua = 0;
+        if (!$nilaiRecord) {
+            return 0;
+        }
 
-        // Hitung total nilai semua mata pelajaran untuk semua murid
-        foreach ($nilaiRecords as $record) {
-            foreach ($this->murids as $murid) {
-                if (isset($record->murid_nilai[$murid->id])) {
-                    $totalNilaiSemua += $record->murid_nilai[$murid->id];
-                    $totalMuridSemua++;
-                }
+        $totalNilai = 0;
+        $jumlahMurid = 0;
+
+        // Hitung rata-rata nilai untuk mata pelajaran ini dari semua murid di kelas
+        foreach ($this->murids as $murid) {
+            if (isset($nilaiRecord->murid_nilai[$murid->id])) {
+                $totalNilai += $nilaiRecord->murid_nilai[$murid->id];
+                $jumlahMurid++;
             }
         }
 
-        return $totalMuridSemua > 0 ? round($totalNilaiSemua / $totalMuridSemua, 2) : 0;
+        return $jumlahMurid > 0 ? round($totalNilai / $jumlahMurid, 2) : 0;
     }
 
     public function cetakSemuaRaport()
