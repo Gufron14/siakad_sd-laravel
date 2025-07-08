@@ -4,20 +4,17 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Kelas;
-use App\Models\User;
 
 class KelasSeeder extends Seeder
 {
-    public function run(): void
+    public function run()
     {
-        // Ambil semua guru yang sudah dibuat
-        $gurus = User::where('type', 'guru')->get();
-
-        // Buat 6 kelas, 1 guru per kelas
-        for ($i = 1; $i <= 6; $i++) {
+        $kelas = ['1', '2', '3', '4', '5', '6'];
+        
+        foreach ($kelas as $tingkat) {
             Kelas::create([
-                'nama' => "$i",
-                'guru_id' => $gurus[$i - 1]->id ?? null,
+                'nama' => $tingkat,
+                'guru_id' => null
             ]);
         }
     }

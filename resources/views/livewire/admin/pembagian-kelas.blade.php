@@ -24,7 +24,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($kelas as $k)
+                                @forelse($kelas as $k)
                                 <tr>
                                     <td class="text-center">{{ $k->nama }}</td>
                                     <td>
@@ -40,13 +40,18 @@
                                         </select>
                                     </td>
                                 </tr>
-                                @endforeach
+                                @empty
+                                <tr>
+                                    <td colspan="2" class="text-center">Belum ada data kelas</td>
+                                </tr>
+                                @endforelse
                             </tbody>
+
                         </table>
-                        <button class="btn btn-primary" wire:click="saveAllPembagian">
+                        {{-- <button class="btn btn-primary" wire:click="saveAllPembagian">
                             <i class="fas fa-save me-1"></i>
                             Simpan Semua
-                        </button>
+                        </button> --}}
                     </div>
                 </div>
             </div>
