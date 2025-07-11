@@ -30,9 +30,9 @@ class PembagianKelas extends Component
     protected $rules = [
         'name' => 'required|string|max:255',
         'email' => 'required|email|unique:users,email',
-        'nip' => 'required|string|unique:users,nip',
-        'phone' => 'nullable|string',
-        'address' => 'nullable|string',
+        // 'nip' => 'required|string|unique:users,nip',
+        // 'phone' => 'nullable|string',
+        // 'address' => 'nullable|string',
         'password' => 'required|min:6'
     ];
 
@@ -138,10 +138,12 @@ class PembagianKelas extends Component
         $data = [
             'name' => $this->name,
             'email' => $this->email,
-            'nip' => $this->nip,
-            'phone' => $this->phone,
-            'address' => $this->address,
+            // 'nip' => $this->nip,
+            // 'phone' => $this->phone,
+            // 'address' => $this->address,
         ];
+
+        
 
         if ($this->password) {
             $data['password'] = bcrypt($this->password);

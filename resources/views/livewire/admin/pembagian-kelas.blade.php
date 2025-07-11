@@ -34,7 +34,7 @@
                                             @foreach($allGuru as $guru)
                                                 <option value="{{ $guru->id }}" 
                                                         {{ $k->guru_id == $guru->id ? 'selected' : '' }}>
-                                                    {{ $guru->name }} ({{ $guru->nip }})
+                                                    {{ $guru->name }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -151,14 +151,14 @@
                             @enderror
                         </div>
 
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <label for="nip" class="form-label">NIP <span class="text-danger">*</span></label>
                             <input type="text" class="form-control @error('nip') is-invalid @enderror" 
                                    wire:model="nip" placeholder="Masukkan NIP">
                             @error('nip')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
-                        </div>
+                        </div> --}}
 
                         <div class="mb-3">
                             <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
@@ -169,23 +169,23 @@
                             @enderror
                         </div>
 
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <label for="phone" class="form-label">No. Telepon</label>
                             <input type="text" class="form-control @error('phone') is-invalid @enderror" 
                                    wire:model="phone" placeholder="Masukkan no. telepon">
                             @error('phone')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
-                        </div>
+                        </div> --}}
 
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <label for="address" class="form-label">Alamat</label>
                             <textarea class="form-control @error('address') is-invalid @enderror" 
                                       wire:model="address" rows="3" placeholder="Masukkan alamat"></textarea>
                             @error('address')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
-                        </div>
+                        </div> --}}
 
                         <div class="mb-3">
                             <label for="password" class="form-label">

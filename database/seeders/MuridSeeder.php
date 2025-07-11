@@ -16,7 +16,7 @@ class MuridSeeder extends Seeder
         $kelas = Kelas::all();
         $ortu = User::where('type', 'orangtua')->pluck('id')->toArray();
 
-        for ($i = 1; $i <= 40; $i++) {
+        for ($i = 1; $i <= 100; $i++) {
             Murid::create([
                 'nama' => $faker->name,
                 'kelas_id' => $kelas->random()->id,
